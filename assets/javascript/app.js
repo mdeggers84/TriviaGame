@@ -2,14 +2,18 @@
 
 $(document).ready(function() {
 
+	var askCount = 3;
 	var right = 0;
 	var wrong = 0;
+	var unanswered = 0;
+	var timer = 20;
 	var interval;
+	
 
 	var askedArr = [];
 	var questArr = [
 	questOne = {
-		question: "This is question two.",
+		question: "This is question one.",
 		answers: [
 		answerOne = {
 			answer: "One",
@@ -124,28 +128,25 @@ $(document).ready(function() {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
-	function startTimer() {
-		interval = setInterval();
-	}
-
-	function stopTimer() {
-
-	}
-
 	function chooseQuestion() {
 		var num = randomNumber(0, questArr.length - 1);
 		var question = questArr[num];
+		askCount--;
+		timer = 20;
+
 		askedArr.push(question);
 
 		$("#game").show();
 
 		writeQuestion(questArr[num]);
 		writeAnswers(questArr[num]);
+		startTimer();
 
 		questArr.splice(num, 1);
 	}
 
 	function writeQuestion(obj) {
+		$("#timer").html("Time remaining: " + timer + " seconds.");
 		$("#question").html(obj.question);
 
 	}
@@ -165,13 +166,14 @@ $(document).ready(function() {
 
 			count++;
 		}
+		
 	}
 
 	function correctAnswer() {
 		$("#game").hide();
 		$("#congrats").show();
 
-		setTimeout(nextQuestion, 1000);
+		setTimeout(nextQuestion, 2000);
 	}
 
 	function wrongAnswer() {
@@ -180,13 +182,13 @@ $(document).ready(function() {
 
 		$("#school-message").html("Wrong Answer");
 
-		setTimeout(nextQuestion, 1000);
+		setTimeout(nextQuestion, 2000);
 	}
 
 	function nextQuestion() {
 		$("#congrats, #school").hide();
 
-		if (questArr.length > 0) {
+		if (askCount > 0) {
 			chooseQuestion();
 		} else {
 			endGame();
@@ -207,6 +209,37 @@ $(document).ready(function() {
 			);
 	}
 
+	function repopQuestArr() {
+		for (var i = 0; i < askedArr.length; i++) {
+			questArr.push(askedArr[i]);
+		}
+		askedArr = [];
+	}
+
+	function startTimer() {
+		interval = setInterval(countdown, 1000);
+	}
+
+	function stopTimer() {
+		clearInterval(interval);
+	}
+
+	function countdown() {
+		timer--;
+
+		$("#timer").html("Time remaining: " + timer + " seconds.");
+
+		if (timer === 5) {
+			$("#clock-tick")[0].play();
+		}
+
+		if (timer === 0) {
+			$("#timer").html("Your time is up!");
+			stopTimer();
+			setTimeout(wrongAnswer, 1000);
+		}
+	}
+
 	$("#play").on("click", function() {
 		$("#start-screen").hide();
 
@@ -216,9 +249,11 @@ $(document).ready(function() {
 	$(".answer").on("click", function() {
 		if ($(this).attr("correct") === "true") {
 			right++;
+			stopTimer();
 			correctAnswer();
 		} else {
 			wrong++;
+			stopTimer();
 			wrongAnswer();
 		}
 	});
@@ -226,8 +261,10 @@ $(document).ready(function() {
 	$("#replay").on("click", function() {
 		right = 0;
 		wrong = 0;
-		questArr = askedArr;
-		askedArr = [];
+		unanswered = 0;
+		askCount = 3;
+
+		repopQuestArr();
 
 		$("#results").hide();
 
