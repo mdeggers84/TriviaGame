@@ -2,7 +2,8 @@
 
 $(document).ready(function() {
 
-	var askCount = 3;
+	var rightAnswer;
+	var askCount = 5;
 	var right = 0;
 	var wrong = 0;
 	var unanswered = 0;
@@ -16,7 +17,7 @@ $(document).ready(function() {
 		question: "This is question one.",
 		answers: [
 		answerOne = {
-			answer: "One",
+			answer: "One One",
 			correct: true
 		},
 		answerTwo = {
@@ -38,7 +39,7 @@ $(document).ready(function() {
 		question: "This is question two.",
 		answers: [
 		answerOne = {
-			answer: "One",
+			answer: "Two One",
 			correct: true
 		},
 		answerTwo = {
@@ -60,7 +61,7 @@ $(document).ready(function() {
 		question: "This is question three.",
 		answers: [
 		answerOne = {
-			answer: "One",
+			answer: "Three One",
 			correct: true
 		},
 		answerTwo = {
@@ -82,7 +83,7 @@ $(document).ready(function() {
 		question: "This is question four.",
 		answers: [
 		answerOne = {
-			answer: "One",
+			answer: "Four One",
 			correct: true
 		},
 		answerTwo = {
@@ -104,7 +105,7 @@ $(document).ready(function() {
 		question: "This is question Five.",
 		answers: [
 		answerOne = {
-			answer: "One",
+			answer: "Five One",
 			correct: true
 		},
 		answerTwo = {
@@ -161,6 +162,10 @@ $(document).ready(function() {
 
 			$("#answer-" + count).html(answer.answer).attr("correct", answer.correct);
 
+			if (answer.correct === true) {
+				rightAnswer = answer.answer;
+			}
+
 			obj.asked.push(answer);
 			obj.answers.splice(num, 1);
 
@@ -180,7 +185,7 @@ $(document).ready(function() {
 		$("#game").hide();
 		$("#school").show();
 
-		$("#school-message").html("Wrong Answer");
+		$("#school-message").html("The correct answer was: " + rightAnswer);
 
 		setTimeout(nextQuestion, 2000);
 	}
@@ -259,10 +264,11 @@ $(document).ready(function() {
 	});
 
 	$("#replay").on("click", function() {
+		rightAnswer = "";
 		right = 0;
 		wrong = 0;
 		unanswered = 0;
-		askCount = 3;
+		askCount = 5;
 
 		repopQuestArr();
 
