@@ -1,5 +1,3 @@
-// working on interval
-
 $(document).ready(function() {
 
 	var rightAnswer;
@@ -9,115 +7,116 @@ $(document).ready(function() {
 	var unanswered = 0;
 	var timer = 20;
 	var interval;
+	var answered = false;
 	
 
 	var askedArr = [];
 	var questArr = [
 	questOne = {
-		question: "This is question one.",
+		text: "This is question one.",
 		answers: [
 		answerOne = {
-			answer: "One One",
+			text: "One One",
 			correct: true
 		},
 		answerTwo = {
-			answer: "Two",
+			text: "Two",
 			correct: false
 		},
 		answerThree = {
-			answer: "Three",
+			text: "Three",
 			correct: false
 		},
 		answerFour = {
-			answer: "Four",
+			text: "Four",
 			correct: false
 		}
 		],
 		asked: []
 	},
 	questTwo = {
-		question: "This is question two.",
+		text: "This is question two.",
 		answers: [
 		answerOne = {
-			answer: "Two One",
+			text: "Two One",
 			correct: true
 		},
 		answerTwo = {
-			answer: "Two",
+			text: "Two",
 			correct: false
 		},
 		answerThree = {
-			answer: "Three",
+			text: "Three",
 			correct: false
 		},
 		answerFour = {
-			answer: "Four",
+			text: "Four",
 			correct: false
 		}
 		],
 		asked: []
 	},
 	questThree = {
-		question: "This is question three.",
+		text: "This is question three.",
 		answers: [
 		answerOne = {
-			answer: "Three One",
+			text: "Three One",
 			correct: true
 		},
 		answerTwo = {
-			answer: "Two",
+			text: "Two",
 			correct: false
 		},
 		answerThree = {
-			answer: "Three",
+			text: "Three",
 			correct: false
 		},
 		answerFour = {
-			answer: "Four",
+			text: "Four",
 			correct: false
 		}
 		],
 		asked: []
 	},
 	questFour = {
-		question: "This is question four.",
+		text: "This is question four.",
 		answers: [
 		answerOne = {
-			answer: "Four One",
+			text: "Four One",
 			correct: true
 		},
 		answerTwo = {
-			answer: "Two",
+			text: "Two",
 			correct: false
 		},
 		answerThree = {
-			answer: "Three",
+			text: "Three",
 			correct: false
 		},
 		answerFour = {
-			answer: "Four",
+			text: "Four",
 			correct: false
 		}
 		],
 		asked: []
 	},
 	questFive = {
-		question: "This is question Five.",
+		text: "This is question Five.",
 		answers: [
 		answerOne = {
-			answer: "Five One",
+			text: "Five One",
 			correct: true
 		},
 		answerTwo = {
-			answer: "Two",
+			text: "Two",
 			correct: false
 		},
 		answerThree = {
-			answer: "Three",
+			text: "Three",
 			correct: false
 		},
 		answerFour = {
-			answer: "Four",
+			text: "Four",
 			correct: false
 		}
 		],
@@ -125,16 +124,21 @@ $(document).ready(function() {
 	}
 	];
 
-	function randomNumber(min, max) {
+	// random numbers for gif, question, and answer selection
+	function getRandom(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
+	// chooses question and resets timer
 	function chooseQuestion() {
-		var num = randomNumber(0, questArr.length - 1);
+		var num = getRandom(0, questArr.length - 1);
 		var question = questArr[num];
+
+		answered = false;
 		askCount--;
 		timer = 20;
 
+		// stores asked question in array to be recycled on replay
 		askedArr.push(question);
 
 		$("#game").show();
@@ -143,53 +147,90 @@ $(document).ready(function() {
 		writeAnswers(questArr[num]);
 		startTimer();
 
+		// removes asked question from question pool
 		questArr.splice(num, 1);
 	}
 
+	// writes the initial timer string and question to html
 	function writeQuestion(obj) {
 		$("#timer").html("Time remaining: " + timer + " seconds.");
-		$("#question").html(obj.question);
-
+		$("#question").html(obj.text);
 	}
 
+	// adds answers to html
 	function writeAnswers(obj) {
 		var count = 1;
 		var length = obj.answers.length;
 
+		// I randomize the write order to help prevent location memorization
 		for (var i = 0; i < length; i++) {
-			var num = randomNumber(0, obj.answers.length - 1);
+			var num = getRandom(0, obj.answers.length - 1);
 			var answer = obj.answers[num];
+			var $answerID = $("#answer-" + count);
 
-			$("#answer-" + count).html(answer.answer).attr("correct", answer.correct);
+			$answerID.html(answer.text).attr("correct", answer.correct).removeClass("right wrong");
 
 			if (answer.correct === true) {
-				rightAnswer = answer.answer;
+				rightAnswer = answer.text;
 			}
 
 			obj.asked.push(answer);
 			obj.answers.splice(num, 1);
 
 			count++;
-		}
-		
+		}	
 	}
 
-	function correctAnswer() {
-		$("#game").hide();
-		$("#congrats").show();
-
-		setTimeout(nextQuestion, 2000);
+	// called when question is answered correctly
+	// moved a lot of this code inside ajax call when i implemented it
+	function correctAnswer() {	
+		getGiphy("yes", true);
 	}
 
+	// opposite of above. Added some extra style features.
 	function wrongAnswer() {
-		$("#game").hide();
-		$("#school").show();
+		for (var i = 1; i <= 4; i++) {
+			var $answer = $("#answer-" + i);
 
-		$("#school-message").html("The correct answer was: " + rightAnswer);
+			if ($answer.attr("correct") === "true") {
+				$answer.addClass("right");
+			} else {
+				$answer.addClass("wrong");
+			}
+		}
 
-		setTimeout(nextQuestion, 2000);
+		// put getGiphy on a timeout to allow time for the highlighted answer effect
+		setTimeout(function() {
+			getGiphy("wrong", false);
+		}, 2000);
 	}
 
+	// utilizes giphy api to pull an array of top search results for the passed keyword and displays one
+	function getGiphy(keyword, correct) {
+		var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + keyword + "&api_key=dc6zaTOxFJmzC";
+
+		$.ajax({
+			url: queryURL,
+			method: "GET"
+		}).done(function(response) {
+			var num = getRandom(0, response.data.length - 1);
+			var gif = response.data[num].images.downsized.url;
+			var imgSrc = '<img src="' + gif + '" alt="gif">';
+
+			if (correct) {
+				$("#congrats").html("Chose the correct answer, you did!<br>" + imgSrc);
+				$("#game").hide();
+				$("#congrats").show();
+			} else {
+				$("#school-message").html("The correct answer was: " + rightAnswer + ".<br>" + imgSrc);
+				$("#game").hide();
+				$("#school").show();
+			}
+			setTimeout(nextQuestion, 3000);
+		});
+	}
+
+	// monitors question count and either posts the next question or ends the game
 	function nextQuestion() {
 		$("#congrats, #school").hide();
 
@@ -200,6 +241,7 @@ $(document).ready(function() {
 		}
 	}
 
+	// displays final results and allows replay
 	function endGame() {
 		$("#game").hide();
 		$("#results").show();
@@ -207,13 +249,16 @@ $(document).ready(function() {
 		writeResults();
 	}
 
+	// posts results ot the screen
 	function writeResults() {
 		$("#scoreboard").html(
 			'<p>Correct Answers: ' + right + ';</p>' +
-			'<p>Wrong Answers: ' + wrong + ';</p>'
+			'<p>Wrong Answers: ' + wrong + ';</p>' +
+			'<p>Unanswered: ' + unanswered + ';</p>'
 			);
 	}
 
+	// reinserts asked questions into the question pool
 	function repopQuestArr() {
 		for (var i = 0; i < askedArr.length; i++) {
 			questArr.push(askedArr[i]);
@@ -221,14 +266,17 @@ $(document).ready(function() {
 		askedArr = [];
 	}
 
+	// timer functions
 	function startTimer() {
 		interval = setInterval(countdown, 1000);
 	}
 
+	// stops the timer for various scenarios (time up / answered question)
 	function stopTimer() {
 		clearInterval(interval);
 	}
 
+	// upates question timer
 	function countdown() {
 		timer--;
 
@@ -239,30 +287,39 @@ $(document).ready(function() {
 		}
 
 		if (timer === 0) {
+			answered = true;
+			unanswered++;
 			$("#timer").html("Your time is up!");
 			stopTimer();
 			setTimeout(wrongAnswer, 1000);
 		}
 	}
 
+	// decided on a play button so the user isn't thrown into the game without being prepared.
 	$("#play").on("click", function() {
 		$("#start-screen").hide();
 
 		chooseQuestion();
 	});
 
+	// on click events
+	// answer selection
 	$(".answer").on("click", function() {
-		if ($(this).attr("correct") === "true") {
-			right++;
-			stopTimer();
-			correctAnswer();
-		} else {
-			wrong++;
-			stopTimer();
-			wrongAnswer();
+		if (answered === false) {
+			answered = true;
+			if ($(this).attr("correct") === "true") {
+				right++;
+				stopTimer();
+				correctAnswer();
+			} else {
+				wrong++;
+				stopTimer();
+				wrongAnswer();
+			}
 		}
 	});
 
+	// replays game after results are show, resets values
 	$("#replay").on("click", function() {
 		rightAnswer = "";
 		right = 0;

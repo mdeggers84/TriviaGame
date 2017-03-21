@@ -1,3 +1,11 @@
 #game, #results, #congrats, #school {
 	display: none;
 }
+
+.right {
+	background-color: green;
+}
+
+.wrong {
+	background-color: red;
+}
