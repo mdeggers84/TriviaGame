@@ -5,6 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Trivia Game</title>
 
+	<link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great" rel="stylesheet">
+
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
@@ -25,16 +27,33 @@
 	<!-- start screen with play button to initiate game -->
 	<section id="start-screen">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">
-					<h2>Press Play to Begin</h2>
-				</div>
-			</div>
 
 			<div class="row">
-				<div class="col-lg-2 col-lg-offset-5 buttons">
-					<button class="btn btn-primary btn-lg" id="play">Play</button>
+
+				<div class="col-lg-8 col-lg-offset-2">
+					<img src="assets/images/blackboard.jpg" class="img-responsive chalkboard" alt="chalkboard">
+
+					<div class="col-lg-10 col-lg-offset-1" id="start-space">
+
+						<div class="row">
+							<div class="col-lg-10 col-lg-offset-1 text-center">
+
+								<h2>Press Play to Begin</h2>
+							</div>
+						</div>
+
+
+
+						<div class="row">
+							<div class="col-lg-2 col-lg-offset-5 buttons">
+								<button class="btn btn-primary btn-lg" id="play">Play</button>
+							</div>
+						</div>
+
+					</div>
+
 				</div>
+
 			</div>
 
 		</div>
@@ -42,30 +61,55 @@
 
 	<!-- main content of game, question/answer template -->
 	<section id="game">
+
 		<div class="container">
 
 			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2 text-center" id="timer"></div>
-			</div>
+				<div class="col-lg-8 col-lg-offset-2">
+					<img src="assets/images/blackboard.jpg" class="img-responsive chalkboard" alt="chalkboard">
+					<div class="row">
 
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2 question" id="question"></div>
-			</div>
+						<div class="col-lg-10 col-lg-offset-1" id="game-space">
 
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2 answer" id="answer-1">1</div>
-			</div>
+							<div class="row">
+								<div class="col-lg-8 col-lg-offset-2 text-center">
+									<h2 id="timer"></h2>
+								</div>
+							</div>
 
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2 answer" id="answer-2">2</div>
-			</div>
+							<div class="row">
+								<div class="col-lg-8 col-lg-offset-2 question">
+									<h3 id="question"></h3>
+								</div>
+							</div>
 
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2 answer" id="answer-3">3</div>
-			</div>
+							<div class="row">
+								<div class="col-lg-8 col-lg-offset-2 answer">
+									<p id="answer-1">1</p>
+								</div>
+							</div>
 
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2 answer" id="answer-4">4</div>
+							<div class="row">
+								<div class="col-lg-8 col-lg-offset-2 answer">
+									<p id="answer-2">2</p>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-8 col-lg-offset-2 answer">
+									<p id="answer-3">3</p>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-8 col-lg-offset-2 answer">
+									<p id="answer-4">4</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
 			</div>
 
 		</div>
@@ -80,8 +124,10 @@
 	<section id="congrats">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2" id="congrats-message">
-					<h2>You got the Right answer! Have a cookie!</h2>
+				<div class="col-lg-8 col-lg-offset-2">
+					<img src="assets/images/blackboard.jpg" class="img-responsive chalkboard" alt="chalkboard">
+					<span class="gif" id="congrats-gif"></span>
+					<p class="message" id="congrats-message"></p>
 				</div>
 			</div>
 		</div>
@@ -91,8 +137,10 @@
 	<section id="school">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2" id="school-message">
-					
+				<div class="col-lg-8 col-lg-offset-2">
+					<img src="assets/images/blackboard.jpg" class="img-responsive chalkboard" alt="chalkboard">
+					<span class="gif" id="school-gif"></span>
+					<p class="message" id="school-message"></p>
 				</div>
 			</div>
 		</div>

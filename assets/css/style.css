@@ -1,11 +1,51 @@
+html, body {
+	min-height: 100%;
+	font-family: 'Fredericka the Great', cursive;
+	color: #fff;
+	background-color: #777;
+}
+
 #game, #results, #congrats, #school {
 	display: none;
 }
 
+#start-space {
+	position: absolute;
+	top: 155px;
+	font-size: 18px;
+}
+
+#game-space {
+	position: absolute;
+	top: 65px;
+	font-size: 18px;
+}
+
+.chalkboard {
+	position: absolute;
+	z-index: -1;
+}
+
+.gif {
+	width: 400px;
+	height: auto;
+	max-height: 350px;
+	position: absolute;
+	top: 35px;
+	left: 45px;
+}
+
+.message {
+	position: absolute;
+	top: 365px;
+	left: 95px;
+	font-size: 24px;
+}
+
 .right {
-	background-color: green;
+	font-size: 24px;
 }
 
 .wrong {
-	background-color: red;
+	text-decoration: line-through;
 }

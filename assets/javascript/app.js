@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
 	var rightAnswer;
+	var questionsObj;
 	var askCount = 5;
 	var right = 0;
 	var wrong = 0;
@@ -124,6 +125,17 @@ $(document).ready(function() {
 	}
 	];
 
+	function getQuestions() {
+		var queryURL = "https://opentdb.com/api.php?amount=15&category=32&difficulty=easy&type=multiple";
+
+		$.ajax({
+			url: queryURL,
+			method: "GET"
+		}).done(function(response){
+			questionsObj = response;
+			console.log(response);
+		});
+	}
 	// random numbers for gif, question, and answer selection
 	function getRandom(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -206,6 +218,7 @@ $(document).ready(function() {
 	}
 
 	// utilizes giphy api to pull an array of top search results for the passed keyword and displays one
+	// i set this up before seeing the cat-button activity--althought it is way more efficient, i'm stubbornly using this method until a later update
 	function getGiphy(keyword, correct) {
 		var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + keyword + "&api_key=dc6zaTOxFJmzC";
 
@@ -213,16 +226,19 @@ $(document).ready(function() {
 			url: queryURL,
 			method: "GET"
 		}).done(function(response) {
+			console.log(response);
 			var num = getRandom(0, response.data.length - 1);
 			var gif = response.data[num].images.downsized.url;
-			var imgSrc = '<img src="' + gif + '" alt="gif">';
+			var imgSrc = '<img src="' + gif + '" alt="gif" class="img-responsive gif">';
 
 			if (correct) {
-				$("#congrats").html("Chose the correct answer, you did!<br>" + imgSrc);
+				$("#congrats-gif").html(imgSrc);
+				$("#congrats-message").html("Chose the correct answer, you did!");
 				$("#game").hide();
 				$("#congrats").show();
 			} else {
-				$("#school-message").html("The correct answer was: " + rightAnswer + ".<br>" + imgSrc);
+				$("#school-gif").html(imgSrc);
+				$("#school-message").html("The correct answer is : <br>"  + rightAnswer);
 				$("#game").hide();
 				$("#school").show();
 			}
@@ -295,10 +311,11 @@ $(document).ready(function() {
 		}
 	}
 
+
 	// decided on a play button so the user isn't thrown into the game without being prepared.
 	$("#play").on("click", function() {
 		$("#start-screen").hide();
-
+		getQuestions();
 		chooseQuestion();
 	});
 
