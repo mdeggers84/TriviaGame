@@ -15,7 +15,7 @@
 	<header>
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12 text-center">
+				<div class="col-md-12 text-center">
 					<h1 class="page-header">Trivia Game</h1>
 				</div>
 			</div>
@@ -26,26 +26,19 @@
 
 	<!-- start screen with play button to initiate game -->
 	<section id="start-screen">
-		<div class="container">
-
+		<div class="container">		
 			<div class="row">
 
-				<div class="col-lg-8 col-lg-offset-2">
-					<img src="assets/images/blackboard.jpg" class="img-responsive chalkboard" alt="chalkboard">
-
-					<div class="col-lg-10 col-lg-offset-1" id="start-space">
+					<div class="col-md-10 col-md-offset-1" id="start-space">
 
 						<div class="row">
-							<div class="col-lg-10 col-lg-offset-1 text-center">
-
+							<div class="col-md-10 col-md-offset-1 text-center">
 								<h2>Press Play to Begin</h2>
 							</div>
 						</div>
 
-
-
 						<div class="row">
-							<div class="col-lg-2 col-lg-offset-5 buttons">
+							<div class="col-md-2 col-md-offset-5 buttons">
 								<button class="btn btn-primary btn-lg" id="play">Play</button>
 							</div>
 						</div>
@@ -53,67 +46,58 @@
 					</div>
 
 				</div>
-
-			</div>
-
 		</div>
 	</section>
 
 	<!-- main content of game, question/answer template -->
 	<section id="game">
-
 		<div class="container">
-
 			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">
-					<img src="assets/images/blackboard.jpg" class="img-responsive chalkboard" alt="chalkboard">
-					<div class="row">
 
-						<div class="col-lg-10 col-lg-offset-1" id="game-space">
+						<div class="col-md-10 col-md-offset-1" id="game-space">
 
 							<div class="row">
-								<div class="col-lg-8 col-lg-offset-2 text-center">
+								<div class="col-md-8 col-md-offset-2 text-center">
 									<h2 id="timer"></h2>
 								</div>
 							</div>
 
 							<div class="row">
-								<div class="col-lg-8 col-lg-offset-2 question">
+								<div class="col-md-10 col-md-offset-1 question">
 									<h3 id="question"></h3>
 								</div>
 							</div>
 
+							<hr>
+
 							<div class="row">
-								<div class="col-lg-8 col-lg-offset-2 answer">
-									<p id="answer-1">1</p>
+								<div class="col-md-8 col-md-offset-2">
+									<p id="answer-1" class="answer">1</p>
 								</div>
 							</div>
 
 							<div class="row">
-								<div class="col-lg-8 col-lg-offset-2 answer">
-									<p id="answer-2">2</p>
+								<div class="col-md-8 col-md-offset-2">
+									<p id="answer-2" class="answer">2</p>
 								</div>
 							</div>
 
 							<div class="row">
-								<div class="col-lg-8 col-lg-offset-2 answer">
-									<p id="answer-3">3</p>
+								<div class="col-md-8 col-md-offset-2">
+									<p id="answer-3" class="answer">3</p>
 								</div>
 							</div>
 
 							<div class="row">
-								<div class="col-lg-8 col-lg-offset-2 answer">
-									<p id="answer-4">4</p>
+								<div class="col-md-8 col-md-offset-2">
+									<p id="answer-4" class="answer">4</p>
 								</div>
 							</div>
+
 						</div>
 
-					</div>
-				</div>
 			</div>
-
 		</div>
-
 		<div id="game-audio">
 			<audio src="https://c4.rbxcdn.com/6dceafb33487f582d15f169ad4d815a8" id="buzzer"></audio>
 			<audio src="http://division.ctuhq.us/clockticking.WAV" id="clock-tick"></audio>
@@ -124,9 +108,8 @@
 	<section id="congrats">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">
-					<img src="assets/images/blackboard.jpg" class="img-responsive chalkboard" alt="chalkboard">
-					<span class="gif" id="congrats-gif"></span>
+				<div class="col-md-8 col-md-offset-2">
+					<span id="congrats-gif"></span><br><br>
 					<p class="message" id="congrats-message"></p>
 				</div>
 			</div>
@@ -137,9 +120,8 @@
 	<section id="school">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">
-					<img src="assets/images/blackboard.jpg" class="img-responsive chalkboard" alt="chalkboard">
-					<span class="gif" id="school-gif"></span>
+				<div class="col-md-8 col-md-offset-2">
+					<span id="school-gif"></span><br><br>
 					<p class="message" id="school-message"></p>
 				</div>
 			</div>
@@ -148,16 +130,21 @@
 
 	<!-- end game / final results screen -->
 	<section id="results">
-		<div class="container">
+		<div class="container text-center">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2" id="results-gif">
+					
+				</div>
+			</div>
 
 			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2" id="scoreboard">
+				<div class="col-md-8 col-md-offset-2" id="scoreboard">
 
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-lg-2 col-lg-offset-5 buttons">
+				<div class="col-md-2 col-md-offset-5 buttons">
 					<button class="btn btn-info btn-lg" id="replay">Replay</button>
 				</div>
 			</div>

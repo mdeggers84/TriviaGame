@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
 	var rightAnswer;
-	var questionsObj;
 	var askCount = 5;
 	var right = 0;
 	var wrong = 0;
@@ -12,130 +11,159 @@ $(document).ready(function() {
 	
 
 	var askedArr = [];
-	var questArr = [
-	questOne = {
-		text: "This is question one.",
-		answers: [
-		answerOne = {
-			text: "One One",
-			correct: true
-		},
-		answerTwo = {
-			text: "Two",
-			correct: false
-		},
-		answerThree = {
-			text: "Three",
-			correct: false
-		},
-		answerFour = {
-			text: "Four",
-			correct: false
-		}
-		],
-		asked: []
-	},
-	questTwo = {
-		text: "This is question two.",
-		answers: [
-		answerOne = {
-			text: "Two One",
-			correct: true
-		},
-		answerTwo = {
-			text: "Two",
-			correct: false
-		},
-		answerThree = {
-			text: "Three",
-			correct: false
-		},
-		answerFour = {
-			text: "Four",
-			correct: false
-		}
-		],
-		asked: []
-	},
-	questThree = {
-		text: "This is question three.",
-		answers: [
-		answerOne = {
-			text: "Three One",
-			correct: true
-		},
-		answerTwo = {
-			text: "Two",
-			correct: false
-		},
-		answerThree = {
-			text: "Three",
-			correct: false
-		},
-		answerFour = {
-			text: "Four",
-			correct: false
-		}
-		],
-		asked: []
-	},
-	questFour = {
-		text: "This is question four.",
-		answers: [
-		answerOne = {
-			text: "Four One",
-			correct: true
-		},
-		answerTwo = {
-			text: "Two",
-			correct: false
-		},
-		answerThree = {
-			text: "Three",
-			correct: false
-		},
-		answerFour = {
-			text: "Four",
-			correct: false
-		}
-		],
-		asked: []
-	},
-	questFive = {
-		text: "This is question Five.",
-		answers: [
-		answerOne = {
-			text: "Five One",
-			correct: true
-		},
-		answerTwo = {
-			text: "Two",
-			correct: false
-		},
-		answerThree = {
-			text: "Three",
-			correct: false
-		},
-		answerFour = {
-			text: "Four",
-			correct: false
-		}
-		],
-		asked: []
-	}
-	];
+	var questArr = [];
+	// var questArr = [
+	// questOne = {
+	// 	text: "This is question one.",
+	// 	answers: [
+	// 	answerOne = {
+	// 		text: "1-One",
+	// 		correct: true
+	// 	},
+	// 	answerTwo = {
+	// 		text: "1-Two",
+	// 		correct: false
+	// 	},
+	// 	answerThree = {
+	// 		text: "1-Three",
+	// 		correct: false
+	// 	},
+	// 	answerFour = {
+	// 		text: "1-Four",
+	// 		correct: false
+	// 	}
+	// 	],
+	// 	asked: []
+	// },
+	// questTwo = {
+	// 	text: "This is question two.",
+	// 	answers: [
+	// 	answerOne = {
+	// 		text: "2-One",
+	// 		correct: true
+	// 	},
+	// 	answerTwo = {
+	// 		text: "2-Two",
+	// 		correct: false
+	// 	},
+	// 	answerThree = {
+	// 		text: "2-Three",
+	// 		correct: false
+	// 	},
+	// 	answerFour = {
+	// 		text: "2-Four",
+	// 		correct: false
+	// 	}
+	// 	],
+	// 	asked: []
+	// },
+	// questThree = {
+	// 	text: "This is question three.",
+	// 	answers: [
+	// 	answerOne = {
+	// 		text: "3-One",
+	// 		correct: true
+	// 	},
+	// 	answerTwo = {
+	// 		text: "3-Two",
+	// 		correct: false
+	// 	},
+	// 	answerThree = {
+	// 		text: "3-Three",
+	// 		correct: false
+	// 	},
+	// 	answerFour = {
+	// 		text: "3-Four",
+	// 		correct: false
+	// 	}
+	// 	],
+	// 	asked: []
+	// },
+	// questFour = {
+	// 	text: "This is question four.",
+	// 	answers: [
+	// 	answerOne = {
+	// 		text: "4-One",
+	// 		correct: true
+	// 	},
+	// 	answerTwo = {
+	// 		text: "4-Two",
+	// 		correct: false
+	// 	},
+	// 	answerThree = {
+	// 		text: "4-Three",
+	// 		correct: false
+	// 	},
+	// 	answerFour = {
+	// 		text: "4-Four",
+	// 		correct: false
+	// 	}
+	// 	],
+	// 	asked: []
+	// },
+	// questFive = {
+	// 	text: "This is question Five.",
+	// 	answers: [
+	// 	answerOne = {
+	// 		text: "5-One",
+	// 		correct: true
+	// 	},
+	// 	answerTwo = {
+	// 		text: "5-Two",
+	// 		correct: false
+	// 	},
+	// 	answerThree = {
+	// 		text: "5-Three",
+	// 		correct: false
+	// 	},
+	// 	answerFour = {
+	// 		text: "5-Four",
+	// 		correct: false
+	// 	}
+	// 	],
+	// 	asked: []
+	// }
+	// ];
 
+	// decided to use opentdb api. spliced it into my original code template, so the code is a little inefficient
 	function getQuestions() {
 		var queryURL = "https://opentdb.com/api.php?amount=15&category=32&difficulty=easy&type=multiple";
-
 		$.ajax({
 			url: queryURL,
 			method: "GET"
-		}).done(function(response){
-			questionsObj = response;
+		}).done(function(response) {
 			console.log(response);
+			var results = response.results;
+			for (var i = 0; i < results.length; i++) {
+				var question = "quest-" + i;
+				questArr.push(
+					question = {
+						text: results[i].question,
+						answers: [
+						answerOne = {
+							text: results[i].correct_answer,
+							correct: true
+						},
+						answerTwo = {
+							text: results[i].incorrect_answers[0],
+							correct: false
+						},
+						answerThree = {
+							text: results[i].incorrect_answers[1],
+							correct: false
+						},
+						answerFour = {
+							text: results[i].incorrect_answers[2],
+							correct: false
+						}
+						],
+						asked: []
+						});
+			}
+			chooseQuestion();
 		});
 	}
+
 	// random numbers for gif, question, and answer selection
 	function getRandom(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -180,7 +208,7 @@ $(document).ready(function() {
 			var answer = obj.answers[num];
 			var $answerID = $("#answer-" + count);
 
-			$answerID.html(answer.text).attr("correct", answer.correct).removeClass("right wrong");
+			$answerID.html(i+1 + ". " + answer.text).attr("correct", answer.correct).removeClass("right wrong");
 
 			if (answer.correct === true) {
 				rightAnswer = answer.text;
@@ -214,7 +242,7 @@ $(document).ready(function() {
 		// put getGiphy on a timeout to allow time for the highlighted answer effect
 		setTimeout(function() {
 			getGiphy("wrong", false);
-		}, 2000);
+		}, 2500);
 	}
 
 	// utilizes giphy api to pull an array of top search results for the passed keyword and displays one
@@ -226,10 +254,9 @@ $(document).ready(function() {
 			url: queryURL,
 			method: "GET"
 		}).done(function(response) {
-			console.log(response);
 			var num = getRandom(0, response.data.length - 1);
-			var gif = response.data[num].images.downsized.url;
-			var imgSrc = '<img src="' + gif + '" alt="gif" class="img-responsive gif">';
+			var gif = response.data[num].images.fixed_height.url;
+			var imgSrc = '<img src="' + gif + '" alt="gif" class="gif">';
 
 			if (correct) {
 				$("#congrats-gif").html(imgSrc);
@@ -242,7 +269,7 @@ $(document).ready(function() {
 				$("#game").hide();
 				$("#school").show();
 			}
-			setTimeout(nextQuestion, 3000);
+			setTimeout(nextQuestion, 3500);
 		});
 	}
 
@@ -267,16 +294,30 @@ $(document).ready(function() {
 
 	// posts results ot the screen
 	function writeResults() {
+		var gif;
+
+		if (unanswered > right && unanswered > wrong) {
+			gif = $("<img>").attr("src", "assets/images/grumpy.gif").attr("alt", "gif");
+		} else if (right > wrong) {
+			gif = $("<img>").attr("src", "assets/images/sloth.gif").attr("alt", "gif");		
+		} else if (wrong > right) {
+			gif = $("<img>").attr("src", "assets/images/panda.gif").attr("alt", "gif");		
+		}
+
 		$("#scoreboard").html(
 			'<p>Correct Answers: ' + right + ';</p>' +
 			'<p>Wrong Answers: ' + wrong + ';</p>' +
 			'<p>Unanswered: ' + unanswered + ';</p>'
-			);
+			)
+		.prepend(gif);		
 	}
 
 	// reinserts asked questions into the question pool
 	function repopQuestArr() {
 		for (var i = 0; i < askedArr.length; i++) {
+			// adds asked questions back into answerArr and clears the temp arr
+			askedArr[i].answers = askedArr[i].asked;
+			askedArr[i].asked = [];
 			questArr.push(askedArr[i]);
 		}
 		askedArr = [];
@@ -316,7 +357,7 @@ $(document).ready(function() {
 	$("#play").on("click", function() {
 		$("#start-screen").hide();
 		getQuestions();
-		chooseQuestion();
+		
 	});
 
 	// on click events
@@ -324,7 +365,7 @@ $(document).ready(function() {
 	$(".answer").on("click", function() {
 		if (answered === false) {
 			answered = true;
-			if ($(this).attr("correct") === "true") {
+			if ($(this).attr("correct") == "true") {
 				right++;
 				stopTimer();
 				correctAnswer();
@@ -343,6 +384,7 @@ $(document).ready(function() {
 		wrong = 0;
 		unanswered = 0;
 		askCount = 5;
+		answered = false;
 
 		repopQuestArr();
 
