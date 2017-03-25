@@ -24,6 +24,10 @@ html, body {
 	padding: 5px;
 }
 
+#question {
+	line-height: 1.5;
+}
+
 .container {
 	text-align: center;
 }
