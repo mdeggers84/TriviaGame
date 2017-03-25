@@ -8,8 +8,6 @@ $(document).ready(function() {
 	var timer = 20;
 	var interval;
 	var answered = false;
-	
-
 	var askedArr = [];
 	var questArr = [];
 
@@ -22,6 +20,7 @@ $(document).ready(function() {
 		}).done(function(response) {
 			console.log(response);
 			var results = response.results;
+			// i imagine it would be better to use the response object values instead of assigning it to my own array template, but time constraints forced me to hack it together
 			for (var i = 0; i < results.length; i++) {
 				var question = "quest-" + i;
 				questArr.push(
